@@ -1,0 +1,31 @@
+#fluent_field_editor.conf
+
+<source>
+  type http
+  port 8887
+  log_level debug
+</source>
+## suppose the alert is from kafka plugin, with tag "argos-parser"
+
+<match argos-parser>
+  type field_editor
+  out_tag argos-parser-processed
+</match>
+
+<match argos-parser-processed>
+  type stdout
+</match>
+
+#use curl for test:
+
+# 1. alerts not enriched, with source_type
+# curl -X POST  http://localhost:8887/argos-parser --data 'json= {"event":{"test_number":"1","source_hostname":"qynprdeibgwap02.bos.intuit.net","application_name": "Agent Service Center (ASC)","source_type":"QDC_Prod_Apps","event_type":"alert.raw.newrelic", "name":"", "alert_enriched":"None"} }'
+
+# 2. alerts enriched with hostname
+# curl -X POST  http://localhost:8887/argos-parser --data 'json= {"event":{"test_number":"2","source_hostname":"qynprdeibgwap02.bos.intuit.net","application_name": "Agent Service Center (ASC)","source_type":"QDC_Prod_Apps","event_type":"alert.raw.newrelic", "name":"hello", "alert_enriched":"Hostname"} }'
+
+# 3.alerts enriched with application name
+# curl -X POST  http://localhost:8887/argos-parser --data 'json= {"event":{"test_number":"3","source_hostname":"qynprdeibgwap02.bos.intuit.net", "application_name": "Agent Service Center (ASC)", "source_type":"QDC_Prod_Apps","event_type":"alert.raw.spectrum", "name":"hello", "alert_enriched":"Application"} }'
+
+# 4. alert not enriched, with empty source_type
+# curl -X POST  http://localhost:8887/argos-parser --data 'json= {"event":{"test_number":"4","source_hostname":"qynprdeibgwap02.bos.intuit.net","application_name": "Agent Service Center (ASC)","source_type":"","event_type":"alert.raw.spectrum", "name":"", "alert_enriched":"None"} }'

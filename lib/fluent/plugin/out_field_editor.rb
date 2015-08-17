@@ -5,44 +5,6 @@ module Fluent
     Fluent::Plugin.register_output('field_editor', self)
     
     config_param  :out_tag,           :string
-    config_param  :edit_field,           :string
-    config_param  :name_for_origin_key,     :string,  :default => nil
-    config_param  :name_for_origin_value,     :string,  :default => nil
-
-    #also need add config for info_name and postion_in_tag (start from 0) within <tag_infos> </tag_infos> block
-
-    # This method is called before starting.
-    def configure(conf)
-      super
-      # Read configuration for tag_infos and create a hash
-      @tag_infos = Hash.new
-      conf.elements.select { |element| element.name == 'tag_infos' }.each { |element|
-        element.each_pair { |info_name, position_in_tag|
-          element.has_key?(info_name) # to suppress unread configuration warning
-          @tag_infos[info_name] = position_in_tag.to_i
-          $log.info "Added tag_infos: #{info_name}=>#{@tag_infos[info_name]}"
-        }
-      }
-
-
-    end
-
-    # def initialize
-    #   require 'highwatermark'
-    #   super
-    # end # def initialize
-
-    # # This method is called when starting.
-    # def start
-    #   super
-    #   @highwatermark = Highwatermark::HighWaterMark.new(@highwatermark_parameters)
-
-    # end
-
-    # # This method is called when shutting down.
-    # def shutdown
-    #   super
-    # end
 
     # This method is called when an event reaches Fluentd.
     # 'es' is a Fluent::EventStream object that includes multiple events.

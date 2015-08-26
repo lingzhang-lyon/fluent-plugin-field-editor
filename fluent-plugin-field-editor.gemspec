@@ -3,8 +3,8 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name          = "fluent-plugin-field-editor"
-  gem.version       = "0.1.0"
-  gem.date          = '2015-08-17'
+  gem.version       = "0.1.1"
+  gem.date          = '2015-08-25'
   gem.authors       = ["Ling Zhang"]
   gem.email         = ["zhangling.ice@gmail.com"]
   gem.summary       = %q{Fluentd output plugin for edit selected field according specified criteria }

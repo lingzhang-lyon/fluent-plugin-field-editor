@@ -25,8 +25,12 @@ module Fluent
             record["event"]["name"] = record["event"]["application_name"]
 
           else
-            if(!record["event"]["source_type"].nil? && !record["event"]["source_type"].empty?)  
-              record["event"]["name"] = record["event"]["source_type"]
+            # if(!record["event"]["source_type"].nil? && !record["event"]["source_type"].empty?)  
+            #   record["event"]["name"] = record["event"]["source_type"]
+            if(!record["event"]["source_hostname"].nil? && !record["event"]["source_hostname"].empty?)  
+              record["event"]["name"] = record["event"]["source_hostname"]
+            elsif (!record["event"]["application_name"].nil? && !record["event"]["application_name"].empty?)  
+              record["event"]["name"] = record["event"]["application_name"]             
             else          
               record["event"]["name"] = "Empty Name"
             end
